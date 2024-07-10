@@ -9,7 +9,7 @@ const readCloset = () => {
   return items;
 };
 
-//Get all items
+//GET all items
 router.get("/closet", (_req, res) => {
   try {
     const itemsData = readCloset();
@@ -31,5 +31,22 @@ router.get("/closet", (_req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
+//GET single item
+router.get("/item/:id",(req, res)=>{
+    try {
+        const itemsData = readCloset();
+        const itemId = req.params.id;
+        console.log(itemId)
+        const singleItemData = itemsData.find((item) => item.id == itemId);
+        if (!singleItemData) {
+          return res.status(404).send("Item not found");
+        }
+        res.json(singleItemData);
+    } catch (error) {
+        console.error("Error reading albums file", error);
+        res.status(500).send("Internal Server Error");
+    }
+})
 
 export default router;
