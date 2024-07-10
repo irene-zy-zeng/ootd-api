@@ -9,8 +9,8 @@ const readCloset = () => {
   return items;
 };
 
-//GET all items
-router.get("/closet", (_req, res) => {
+//Get all items
+router.get("/item", (_req, res) => {
   try {
     const itemsData = readCloset();
     // console.log(itemsData);
