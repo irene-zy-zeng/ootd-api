@@ -10,7 +10,7 @@ const readCloset = () => {
 };
 
 //Get all items
-router.get("/closet", (_req, res) => {
+router.get("/item", (_req, res) => {
   try {
     const itemsData = readCloset();
     // console.log(itemsData);
