@@ -59,7 +59,7 @@ router.get("/item/:id",(req, res)=>{
 export default router;
 
 //POST -> Add/Upload a New Item
-router.post("/items",(req,res)=>{
+router.post("/item",(req,res)=>{
   try {
     const itemsData = readCloset();
 
