@@ -44,7 +44,7 @@ router.get("/item/:id",(req, res)=>{
     try {
         const itemsData = readCloset();
         const itemId = req.params.id;
-        console.log(itemId)
+        // console.log(itemId)
         const singleItemData = itemsData.find((item) => item.id == itemId);
         if (!singleItemData) {
           return res.status(404).send("Item not found");
