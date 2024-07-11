@@ -1,13 +1,20 @@
 import express from "express";
 import fs from "fs";
+import uuid4 from "uuid4";
 
 const router = express.Router();
+router.use(express.json());
 
 const readCloset = () => {
   const closetFile = fs.readFileSync("./data/closet.json");
   const items = JSON.parse(closetFile);
   return items;
 };
+
+const writeCloset = (data) =>{
+  const stringifiedData = JSON.stringify(data);
+  fs.writeFileSync("./data/closet.json", stringifiedData);
+}
 
 //Get all items
 router.get("/item", (_req, res) => {
@@ -50,3 +57,29 @@ router.get("/item/:id",(req, res)=>{
 })
 
 export default router;
+
+//POST -> Add/Upload a New Item
+router.post("/items",(req,res)=>{
+  try {
+    const itemsData = readCloset();
+
+    const newItem = {
+      id: uuid4(),
+      name: req.body.name,
+      image: req.body.image,
+      category: req.body.category,
+      color: req.body.color,
+      season: req.body.season,
+      brand: req.body.brand,
+    };
+
+    itemsData.push(newItem);
+    writeCloset(itemsData);
+
+    res.status(201).json(newItem); 
+  } catch (error) {
+    console.error("Error adding new item:", error);
+    res.status(500).send("Internal Server Error");
+  }
+
+})
