@@ -1,9 +1,13 @@
 import express from "express";
 import fs from "fs";
 import uuid4 from "uuid4";
+import multer from 'multer';
 
 const router = express.Router();
 router.use(express.json());
+const upload = multer({ dest: "uploads/" });
+
+// const closetFilePath = "./data/closet.json";
 
 const readCloset = () => {
   const closetFile = fs.readFileSync("./data/closet.json");
@@ -56,17 +60,17 @@ router.get("/item/:id",(req, res)=>{
     }
 })
 
-export default router;
 
 //POST -> Add/Upload a New Item
-router.post("/item",(req,res)=>{
+router.post("/item",upload.single('image'), (req, res) => {
   try {
     const itemsData = readCloset();
+    const image = req.file;
 
     const newItem = {
-      id: uuid4(),
+      id: itemsData.length + 1,
       name: req.body.name,
-      image: req.body.image,
+      image: `http://localhost:8080/uploads/${image.filename}`,
       category: req.body.category,
       color: req.body.color,
       season: req.body.season,
@@ -83,3 +87,6 @@ router.post("/item",(req,res)=>{
   }
 
 })
+
+
+export default router;

@@ -11,6 +11,7 @@ PORT = PORT || 8081;
 app.use(cors({ origin: CROSS_ORIGIN }));
 app.use(express.json());
 app.use(express.static("public"));
+app.use('/uploads', express.static("uploads")); 
 
 app.use("/", closetRoutes);
 
