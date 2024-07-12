@@ -1,7 +1,8 @@
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
-import closetRoutes from './routes/closet.js'
+import closetRoutes from './routes/closet.js';
+import outfitRoutes from "./routes/outfit.js";
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.static("public"));
 app.use('/uploads', express.static("uploads")); 
 
 app.use("/", closetRoutes);
+app.use("/", outfitRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
