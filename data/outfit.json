@@ -1,6 +1,1 @@
-[
-  {
-    "id": 1,
-    "image": "http://localhost:8080/images/outfit-test.png"
-  }
-]
+[{"id":1,"image":"http://localhost:8080/uploads/57eeaf38fdfaf22b33db6cdad7fe3a31"},{"id":2,"image":"http://localhost:8080/uploads/2a8e67adf661203dc0694531a0e07e24"},{"id":3,"image":"http://localhost:8080/uploads/1c6b9692ebe10f5eeee20f309f2f422f"}]

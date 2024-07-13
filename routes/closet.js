@@ -103,13 +103,42 @@ router.delete("/item/:id", (req, res) => {
 
     itemsData.splice(itemIndex, 1);
     writeCloset(itemsData);
-
     res.status(200).json({ message: "Item deleted successfully" });
   } catch (error) {
     console.error("Error deleting item:", error);
     res.status(500).send("Internal Server Error");
   }
 })
+
+//PUT -> update and item
+router.put("/item/:id",upload.single('image'), (req, res) =>{
+  try {
+    const itemsData = readCloset();
+    const itemId = parseInt(req.params.id);
+
+    const itemIndex = itemsData.findIndex(item => item.id === itemId);
+
+    if (itemIndex === -1) {
+      return res.status(404).send("Item not found");
+    }
+
+    const updatedItem = {
+      ...itemsData[itemIndex],
+      name: req.body.name,
+      category: req.body.category,
+      color: req.body.color,
+      season: req.body.season,
+      brand: req.body.brand,
+    };
+
+    itemsData[itemIndex] = updatedItem;
+    writeCloset(itemsData);
+    res.status(200).json(updatedItem);
+  } catch (error) {
+    console.error("Error updating item:", error);
+    res.status(500).send("Internal Server Error");
+  }
+} )
 
 
 export default router;
