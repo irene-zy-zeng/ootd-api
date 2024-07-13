@@ -88,5 +88,53 @@ router.post("/item",upload.single('image'), (req, res) => {
 
 })
 
+//DELETE -> delete an item
+// router.delete("/item/:id", (req,res)=>{
+//   try {
+//     const itemsData = readCloset();
+//     const itemId = req.params.id;
+//     console.log(itemId)
+
+//     console.log("Before deletion:", itemsData);
+
+//     for (let i = 0; i < itemsData.length; i++) {
+//       if (itemsData[i].id === itemId) {
+//         console.log(`Deleting item with id: ${itemId}`);
+//         itemsData.splice(i, 1);
+//         break;
+//       }
+//     }
+//     writeCloset(itemsData);
+//     console.log("After deletion:", itemsData);
+
+//     res.status(200).json({ message: "Item deleted successfully" });
+
+//   } catch (error) {
+//     console.error("Error deleting item:", error);
+//     res.status(500).send("Internal Server Error");
+//   }
+// })
+
+router.delete("/item/:id", (req, res) => {
+  try {
+    const itemsData = readCloset();
+    const itemId = parseInt(req.params.id);
+
+    const itemIndex = itemsData.findIndex(item => item.id === itemId);
+
+    if (itemIndex === -1) {
+      return res.status(404).send("Item not found");
+    }
+
+    itemsData.splice(itemIndex, 1);
+    writeCloset(itemsData);
+
+    res.status(200).json({ message: "Item deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting item:", error);
+    res.status(500).send("Internal Server Error");
+  }
+})
+
 
 export default router;
